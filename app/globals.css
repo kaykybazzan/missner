@@ -126,29 +126,18 @@ main {
 }
 
 .nav a {
-  opacity: 0.9;
+  opacity: 0.6;
   position: relative;
-  padding-bottom: 3px;
-  transition: opacity 0.2s ease;
-}
-
-.nav a::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 0;
-  height: 1px;
-  background: currentColor;
-  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s ease;
 }
 
 .nav a:hover {
   opacity: 1;
 }
 
-.nav a:hover::after {
-  width: 100%;
+.nav a.active {
+  opacity: 1;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
 }
 
 .header-whatsapp,

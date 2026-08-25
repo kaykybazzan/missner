@@ -106,11 +106,42 @@ function PremiumTextAnimation() {
 function Header() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  useEffect(() => { const onScroll = () => setScrolled(window.scrollY > 40); window.addEventListener('scroll', onScroll); return () => window.removeEventListener('scroll', onScroll) }, [])
+  const [activeSection, setActiveSection] = useState('inicio')
+  
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 40)
+      
+      // Detect which section is currently in view
+      const sections = ['inicio', 'caminho', 'cuidados', 'como-funciona', 'contato']
+      const scrollPosition = window.scrollY + 100
+      
+      for (const section of sections) {
+        const element = document.getElementById(section)
+        if (element) {
+          const { offsetTop, offsetHeight } = element
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(section)
+            break
+          }
+        }
+      }
+    }
+    
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+  
   return <header className={`site-header ${scrolled ? 'scrolled' : ''}`}>
     <a className="brand" href="#inicio" aria-label="Missner início"><img src="/logo.png" alt="Missner" className="brand-logo" /></a>
-    <nav className={open ? 'nav open' : 'nav'} aria-label="Navegação principal"><a href="#caminho" onClick={() => setOpen(false)}>Encontre seu caminho</a><a href="#cuidados" onClick={() => setOpen(false)}>Cuidados</a><a href="#como-funciona" onClick={() => setOpen(false)}>Como funciona</a><a href="#contato" onClick={() => setOpen(false)}>Contato</a></nav>
-    <a className="header-whatsapp" href={whatsappUrl}><MessageCircle size={15} /> WhatsApp</a><button className="menu-button" onClick={() => setOpen(!open)} aria-label={open ? 'Fechar menu' : 'Abrir menu'}>{open ? <X /> : <Menu />}</button>
+    <nav className={open ? 'nav open' : 'nav'} aria-label="Navegação principal">
+      <a href="#caminho" onClick={() => setOpen(false)} className={activeSection === 'caminho' ? 'active' : ''}>Encontre seu caminho</a>
+      <a href="#cuidados" onClick={() => setOpen(false)} className={activeSection === 'cuidados' ? 'active' : ''}>Cuidados</a>
+      <a href="#como-funciona" onClick={() => setOpen(false)} className={activeSection === 'como-funciona' ? 'active' : ''}>Como funciona</a>
+      <a href="#contato" onClick={() => setOpen(false)} className={activeSection === 'contato' ? 'active' : ''}>Contato</a>
+    </nav>
+    <a className="header-whatsapp" href={whatsappUrl}><MessageCircle size={15} /> WhatsApp</a>
+    <button className="menu-button" onClick={() => setOpen(!open)} aria-label={open ? 'Fechar menu' : 'Abrir menu'}>{open ? <X /> : <Menu />}</button>
   </header>
 }
 function SmileLine({ className = '' }: { className?: string }) {
