@@ -1,6 +1,18 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
+@layer utilities {
+  /* Esconde a barra de rolagem mantendo a navegação pelo mouse/touch */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none; /* Safari e Chrome */
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* IE e Edge antigo */
+    scrollbar-width: none;  /* Firefox */
+  }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
