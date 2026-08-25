@@ -128,16 +128,19 @@ main {
 .nav a {
   opacity: 0.6;
   position: relative;
-  transition: all 0.3s ease;
+  transition: all 0.5s ease;
+  transform: scale(1);
 }
 
 .nav a:hover {
   opacity: 1;
+  transform: scale(1.05);
 }
 
 .nav a.active {
   opacity: 1;
   text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+  transform: scale(1.08);
 }
 
 .header-whatsapp,
